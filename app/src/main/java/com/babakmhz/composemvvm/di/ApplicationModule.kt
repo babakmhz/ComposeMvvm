@@ -1,11 +1,17 @@
 package com.babakmhz.composemvvm.di
 
+import android.content.Context
 import com.babakmhz.composemvvm.BuildConfig
+import com.babakmhz.composemvvm.data.db.DbHelper
+import com.babakmhz.composemvvm.data.db.DbImpl
+import com.babakmhz.composemvvm.data.db.model.MyObjectBox
+import com.babakmhz.composemvvm.data.util.PhotoItemToPhotoModelMapper
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.objectbox.BoxStore
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -46,6 +52,24 @@ class ApplicationModule {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideDbHelper(dbImpl: DbImpl): DbHelper = dbImpl
+
+    @Provides
+    @Singleton
+    fun providePhotoResponseToModelMapper(): PhotoItemToPhotoModelMapper =
+        PhotoItemToPhotoModelMapper()
+
+
+    @Provides
+    @Singleton
+    fun provideBoxStore(context: Context): BoxStore =
+        MyObjectBox.builder()
+            .androidContext(context.applicationContext)
+            .name("ComposeMVVM_V1")
             .build()
 
 }

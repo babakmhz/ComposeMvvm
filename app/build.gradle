@@ -16,7 +16,7 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-        buildConfigField('String','BASE_URL',"\"\"")
+        buildConfigField('String','BASE_URL',"\"https://jsonplaceholder.typicode.com/\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -70,9 +70,9 @@ dependencies {
 
 
     //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "androidx.navigation:navigation-compose:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-compose:$navigationComposeVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //glide
@@ -131,6 +131,10 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     debugImplementation "androidx.fragment:fragment-testing:1.4.0"
 
+
+    debugImplementation("io.objectbox:objectbox-android-objectbrowser:$objectboxVersion")
+    releaseImplementation("io.objectbox:objectbox-android-objectbrowser:$objectboxVersion")
+
     //hilt
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
@@ -147,3 +151,5 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 }
+// Apply plugin after dependencies block so they are not overwritten.
+apply plugin: 'io.objectbox'

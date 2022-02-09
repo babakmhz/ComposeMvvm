@@ -6,6 +6,8 @@ buildscript {
 
         // navigation
         navigationVersion = '2.3.5'
+        // navigation compose
+        navigationComposeVersion = '2.4.0-rc01'
         //kotlin
         kotlin_version = '1.4.30'
         //appcompat
@@ -78,6 +80,8 @@ buildscript {
         espresso_contrib = '3.4.0'
         //mockk
         mockk_version = '1.12.0'
+        //objectbox
+        objectboxVersion = '2.9.1'
     }
     repositories {
         google()
@@ -88,7 +92,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-
+        classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
