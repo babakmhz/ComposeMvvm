@@ -1,4 +1,4 @@
-package com.babakmhz.composemvvm.ui.theme
+package com.babakmhz.composemvvm.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

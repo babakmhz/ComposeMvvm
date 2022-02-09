@@ -1,4 +1,4 @@
-package com.babakmhz.composemvvm.ui.theme
+package com.babakmhz.composemvvm.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
