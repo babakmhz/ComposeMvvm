@@ -48,8 +48,11 @@ class MainViewModelTest {
 
     @Test
     fun `test if no cashed photos, the livedata should remain in IDLE state`() = runBlockingTest {
+        //given
         coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
+        //whn
         viewModel.photosLiveData.observeForever { }
+        //then
         assertNotNull(viewModel.photosLiveData)
         assertEquals(viewModel.photosLiveData.value, MainUiState.Idle)
     }
@@ -57,9 +60,12 @@ class MainViewModelTest {
     @Test
     fun `test if there are cashed photos, the livedata should be in success state`() =
         runBlockingTest {
+            //given
             val data = listOf(Photo(0))
             coEvery { repositoryHelper.getPhotosFromLocalSource() } returns data
+            //when
             viewModel.photosLiveData.observeForever { }
+            //then
             assertNotNull(viewModel.photosLiveData)
             assertEquals(viewModel.photosLiveData.value, MainUiState.Success(data))
         }
@@ -71,7 +77,6 @@ class MainViewModelTest {
             val returnError = Throwable()
             coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
             coEvery { repositoryHelper.getPhotosFromRemoteSource() } throws (returnError)
-
             viewModel.photosLiveData.observeForever {}
 
             // when
