@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
     private val repositoryHelper: RepositoryHelper
 ) : ViewModel() {
 
-    private val _photosLiveData = MutableLiveData<MainUiState<List<Photo>>>()
+    private val _photosLiveData = MutableLiveData<MainUiState<List<Photo>>>(MainUiState.Idle)
     val photosLiveData: LiveData<MainUiState<List<Photo>>> = _photosLiveData
 
     init {
@@ -31,5 +31,6 @@ class MainViewModel @Inject constructor(
     fun fetchPhotos() = viewModelScope.launchWithException(_photosLiveData) {
         _photosLiveData.postValue(MainUiState.Loading)
         val apiResponse = repositoryHelper.getPhotosFromRemoteSource()
+        _photosLiveData.postValue(MainUiState.Success(apiResponse))
     }
 }
