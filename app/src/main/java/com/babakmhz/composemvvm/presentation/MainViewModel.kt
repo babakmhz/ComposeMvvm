@@ -8,6 +8,8 @@ import com.babakmhz.composemvvm.data.RepositoryHelper
 import com.babakmhz.composemvvm.data.db.model.Photo
 import com.babakmhz.composemvvm.utils.launchWithException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,13 +28,18 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launchWithException(_errorState) {
-            fetchPhotos()
-            val cachedPhotos = repositoryHelper.getPhotosFromLocalSource()
-            if (cachedPhotos.isNotEmpty())
-                _photosState.postValue(cachedPhotos)
-
+            awaitAll(
+                async { fetchPhotos() },
+                async {
+                    val cachedPhotos =
+                        repositoryHelper.getPhotosFromLocalSource()
+                    if (cachedPhotos.isNotEmpty())
+                        _photosState.postValue(cachedPhotos)
+                }
+            )
         }
     }
+
 
     private suspend fun fetchPhotos() {
         _loadingState.postValue(true)
