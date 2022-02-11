@@ -52,63 +52,60 @@ class MainViewModelTest {
         //when
         viewModel.photosState.observeForever {  }
         //then
-        assertNull(viewModel.photosState)
+        assertNotNull(viewModel.photosState)
+        assertTrue(viewModel.photosState.value.isNullOrEmpty())
     }
 
     @Test
     fun `test if there are cashed photos, the livedata should be in success state`() =
-        coroutineTestRule.coroutineScope.runBlockingTest {
+        runBlockingTest {
             //given
             val data = listOf(Photo(0))
             coEvery { repositoryHelper.getPhotosFromLocalSource() } returns data
             //when
-            val viewModel = MainViewModel(repositoryHelper)
             viewModel.photosState.observeForever {
-                println("state of live data $it")
+                println("photos state $it")
             }
             //then
             assertNotNull(viewModel.photosState)
-            assertTrue(viewModel.photosState.value!!.isNotEmpty())
+            assertTrue(viewModel.photosState.value?.isNotEmpty() == true)
         }
 
-//    @Test
-//    fun `test data cannot be fetched from remote source should change live data state to Error`() =
-//        runBlockingTest {
-//            // given
-//            val returnError = Throwable()
-//            coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
-//            coEvery { repositoryHelper.getPhotosFromRemoteSource() } throws (returnError)
-//            viewModel.photosLiveData.observeForever {}
-//
-//            // when
-//            viewModel.fetchPhotos()
-//
-//            // then
-//            assertNotNull(viewModel.photosLiveData.value)
-//            assertEquals(viewModel.photosLiveData.value, MainUiState.Error(returnError))
-//        }
-//
-//    @Test
-//    fun `test data fetched from remote source should change live data state to loading then success`() =
-//        coroutineDispatcher.runBlockingTest {
-//            // given
-//            val delayTime = 1000L
-//            val data = listOf(Photo(0))
-//            coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
-//            coEvery { repositoryHelper.getPhotosFromRemoteSource() } coAnswers {
-//                delay(delayTime)
-//                data
-//            }
-//
-//            viewModel.photosLiveData.observeForever {}
-//
-//            // when
-//            viewModel.fetchPhotos()
-//
-//            // then
-//            assertNotNull(viewModel.photosLiveData.value)
-//            assertEquals(viewModel.photosLiveData.value, MainUiState.Loading)
-//            advanceTimeBy(delayTime)
-//            assertEquals(viewModel.photosLiveData.value, MainUiState.Success(data))
-//        }
+    @Test
+    fun `test data cannot be fetched from remote source should change live data state to Error`() =
+        runBlockingTest {
+            // given
+            val returnError = Throwable()
+            coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
+            coEvery { repositoryHelper.getPhotosFromRemoteSource() } throws (returnError)
+
+            // when
+            viewModel.errorState.observeForever {}
+
+            // then
+            assertNotNull(viewModel.errorState.value)
+            assertTrue(viewModel.errorState.value!=null)
+        }
+
+    @Test
+    fun `test data fetched from remote source should change live data state to loading then success`() =
+        coroutineDispatcher.runBlockingTest {
+            // given
+            val delayTime = 1000L
+            val data = listOf(Photo(0))
+            coEvery { repositoryHelper.getPhotosFromLocalSource() } returns arrayListOf()
+            coEvery { repositoryHelper.getPhotosFromRemoteSource() } coAnswers {
+                delay(delayTime)
+                data
+            }
+
+            // when
+            viewModel.photosState.observeForever {}
+            viewModel.loadingState.observeForever {}
+
+            // then
+            assertEquals(viewModel.loadingState.value, true)
+            advanceTimeBy(delayTime)
+            assertTrue(viewModel.photosState.value!!.isNotEmpty())
+        }
 }
