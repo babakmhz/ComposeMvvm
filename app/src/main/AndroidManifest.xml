@@ -11,7 +11,7 @@
         android:name=".utils.MyApp"
         android:theme="@style/Theme.ComposeMVVM">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeMVVM.NoActionBar">

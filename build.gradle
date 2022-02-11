@@ -3,7 +3,9 @@ buildscript {
     ext {
         //compose
         compose_version = '1.0.1'
-
+        //coil
+        coil_version = '1.3.1'
+        compose_liveData_version = '1.2.0-alpha02'
         // navigation
         navigationVersion = '2.3.5'
         // navigation compose

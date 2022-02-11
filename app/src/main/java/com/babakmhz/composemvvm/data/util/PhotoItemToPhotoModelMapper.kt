@@ -8,9 +8,9 @@ class PhotoItemToPhotoModelMapper : Mapper<PhotoItemResponse, Photo> {
         return Photo(
             model.albumId,
             model.id.toLong(),
-            model.thumbnailUrl,
+            "${model.thumbnailUrl}.png",
             model.title,
-            model.url
+            "${model.thumbnailUrl}.png",
         )
     }
 
@@ -18,9 +18,9 @@ class PhotoItemToPhotoModelMapper : Mapper<PhotoItemResponse, Photo> {
         return PhotoItemResponse(
             domainModel.albumId,
             domainModel.id.toInt(),
-            domainModel.thumbnailUrl,
+            domainModel.thumbnailUrl.replaceAfterLast(".png",""),
             domainModel.title,
-            domainModel.url
+            domainModel.url.replaceAfterLast(".png","")
         )
     }
 

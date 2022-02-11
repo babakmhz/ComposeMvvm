@@ -5,13 +5,4 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 abstract class BaseActivity : AppCompatActivity(), BaseViewHelper {
-
-
-    override fun onStart() {
-        super.onStart()
-        initializeUi()
-    }
-
-    abstract fun initializeUi()
-
 }

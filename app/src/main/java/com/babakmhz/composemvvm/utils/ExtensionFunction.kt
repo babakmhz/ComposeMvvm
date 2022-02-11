@@ -1,6 +1,7 @@
 package com.babakmhz.composemvvm.utils
 
 import android.view.View
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +27,12 @@ fun View?.toInvisible() {
 fun String?.validString() = this != null && this.isNotEmpty()
 
 
-fun <T : Any> CoroutineScope.launchWithException(
-    livedata: MutableLiveData<MainUiState<T>>,
+fun CoroutineScope.launchWithException(
+    livedata: MutableLiveData<Throwable>,
     block: suspend CoroutineScope.() -> Unit
 ): Job {
     return launch(CoroutineExceptionHandler { _, throwable ->
-        livedata.postValue(MainUiState.Error(throwable))
+        livedata.postValue(throwable)
     }, block = block)
 }
 
