@@ -1,4 +1,4 @@
-package com.babakmhz.composemvvm.presentation.ui.photosList.components
+package com.babakmhz.composemvvm.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

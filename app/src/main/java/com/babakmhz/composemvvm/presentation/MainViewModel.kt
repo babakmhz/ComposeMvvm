@@ -23,11 +23,11 @@ class MainViewModel @Inject constructor(
     private var _loadingState = MutableLiveData(false)
     val loadingState: LiveData<Boolean> = _loadingState
 
-    private var _errorState: MutableLiveData<Throwable> = MutableLiveData()
-    val errorState: LiveData<Throwable> = _errorState
+    private var _errorState: MutableLiveData<Throwable?> = MutableLiveData(null)
+    val errorState: LiveData<Throwable?> = _errorState
 
     init {
-        viewModelScope.launchWithException(_errorState) {
+        viewModelScope.launchWithException(_errorState, _loadingState) {
             awaitAll(
                 async { fetchPhotos() },
                 async {
@@ -46,5 +46,9 @@ class MainViewModel @Inject constructor(
         val apiResponse = repositoryHelper.getPhotosFromRemoteSource()
         _photosState.postValue(apiResponse)
         _loadingState.postValue(false)
+    }
+
+    fun reFetchPhotos() = viewModelScope.launchWithException(_errorState, _loadingState) {
+        fetchPhotos()
     }
 }

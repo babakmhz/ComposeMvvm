@@ -5,9 +5,15 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.provider.Settings
 import android.view.View
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.babakmhz.composemvvm.utils.validString
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 interface BaseViewHelper {
 
@@ -46,4 +52,5 @@ interface BaseViewHelper {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("OK") {
         }.show()
     }
+
 }
