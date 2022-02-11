@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.fragment.NavHostFragment
 import com.babakmhz.composemvvm.presentation.MainViewModel
 import com.babakmhz.composemvvm.presentation.ui.base.BaseActivity
 import com.babakmhz.composemvvm.presentation.ui.base.BaseFragment
@@ -51,14 +52,14 @@ class PhotosListFragment : BaseFragment() {
 
     @Composable
     fun contentView(viewModel: MainViewModel) {
-        photosListView(viewModel = viewModel)
+        photosListView(viewModel = viewModel,this)
     }
 }
 
 @ExperimentalFoundationApi
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun photosListView(viewModel: MainViewModel) {
+fun photosListView(viewModel: MainViewModel,fragment: BaseFragment) {
     val loading by viewModel.loadingState.observeAsState()
     val photos by viewModel.photosState.observeAsState()
     val error by viewModel.errorState.observeAsState()
@@ -74,6 +75,8 @@ fun photosListView(viewModel: MainViewModel) {
                     val item = photos!![index]
                     photoListItem(item) {
                         // navigate
+                        val action = PhotosListFragmentDirections.actionPhotosListFragmentToDetailFragment(this)
+                        NavHostFragment.findNavController(fragment).navigate(action)
                     }
                 }
             }

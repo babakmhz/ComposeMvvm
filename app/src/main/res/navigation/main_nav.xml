@@ -8,5 +8,17 @@
         android:id="@+id/photosListFragment"
         android:name="com.babakmhz.composemvvm.presentation.ui.photosList.PhotosListFragment"
         android:label="fragment_photos_list"
-      />
+      >
+        <action
+            android:id="@+id/action_photosListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.babakmhz.composemvvm.presentation.ui.details.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="photo"
+            app:argType="com.babakmhz.composemvvm.data.db.model.Photo" />
+    </fragment>
 </navigation>

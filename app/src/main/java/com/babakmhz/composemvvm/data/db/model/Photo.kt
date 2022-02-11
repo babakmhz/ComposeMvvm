@@ -2,6 +2,7 @@ package com.babakmhz.composemvvm.data.db.model
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import java.io.Serializable
 
 @Entity
 data class Photo(
@@ -11,4 +12,4 @@ data class Photo(
     var thumbnailUrl: String = "",
     var title: String = "",
     var url: String = ""
-)
+):Serializable
