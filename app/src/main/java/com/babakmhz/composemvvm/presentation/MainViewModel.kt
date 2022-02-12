@@ -17,6 +17,8 @@ class MainViewModel @Inject constructor(
     private val repositoryHelper: RepositoryHelper
 ) : ViewModel() {
 
+    // using mutableState is also possible instead of livedata in case of composable UIs
+
     private var _photosState = MutableLiveData<List<Photo>>()
     val photosState: LiveData<List<Photo>> = _photosState
 

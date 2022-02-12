@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.babakmhz.composemvvm.data.RepositoryHelper
 import com.babakmhz.composemvvm.data.db.model.Photo
 import com.babakmhz.composemvvm.utils.CoroutineTestRule
-import com.babakmhz.composemvvm.utils.MainUiState
 import io.mockk.coEvery
 import io.mockk.spyk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
